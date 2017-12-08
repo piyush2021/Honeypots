@@ -214,7 +214,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Follower Analytics</span></a></li>
+        <li class="active"><a href="http://127.0.0.1:5000/Twitter/follower"><i class="fa fa-link"></i> <span>Follower Analytics</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Tweets Statistics</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Status Count</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Other Data</span></a></li>
@@ -306,10 +306,10 @@
           <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
             <ul class="nav nav-tabs pull-right">
-              <li class="pull-left header"><i class="fa fa-inbox"></i> Follower Analytics</li>
+              <li class="pull-left header"><i class="fa fa-inbox"></i> </li>
             </ul>
             <div class="tab-content no-padding">
-              <canvas id="chart" style="position: relative; height: 300px;"></canvas>
+              <canvas id="follower_chart" style="position: relative; width: 500px; height: 300px;"></canvas>
               <!--  Morris chart - Sales 
               <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
               <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
@@ -340,7 +340,7 @@
           <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
             <ul class="nav nav-tabs pull-right">
-              <li class="pull-left header"><i class="fa fa-inbox"></i> Follower Analytics</li>
+              <li class="pull-left header" id="chart_heading"><i class="fa fa-inbox"></i>Follower Analytics</li>
             </ul>
             <div class="tab-content no-padding">
               <canvas id="chart" style="position: relative; height: 300px;"></canvas>
@@ -382,11 +382,16 @@
 <script src="{{ url_for('static', filename='styles/bower_components/morris.js/morris.min.js') }}"></script>
 
 <!-- import plugin script -->
-<script src='static/Chart.min.js'></script>
+<script src="{{ url_for('static', filename='Chart.min.js') }}"></script>
 <!-- Chart.js script -->
+<script type="text/javascript">
+  window.onload = function(){
+                    document.getElementById("chart_heading").value="Item was changed";
+                    }
+</script>
 <script>
- 
-   // bar chart data
+    
+   // line chart data
    var barData = {
    labels : [{% for item in labels %}
                   "{{item}}",
@@ -416,12 +421,12 @@
     Chart.defaults.global.scaleLineColor = "black";
     Chart.defaults.global.scaleFontSize = 16;
  
-   // get bar chart canvas
-   var mychart = document.getElementById("chart").getContext("2d");
+   // get follower chart canvas
+   var mychart = document.getElementById("follower_chart").getContext("2d");
  
    steps = 10
    max = 10
-   // draw bar chart
+   // draw line chart
    var LineChartDemo = new Chart(mychart).Line(barData, {
         scaleOverride: true,
         scaleSteps: steps,
