@@ -17,13 +17,18 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth)
-
+default_user = api.get_user('Google')
 
 @app.route("/")
 def chart():
     labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
     values = [10, 9, 8, 7, 6, 4, 7, 8]
-    return render_template('chart.html', values=values, labels=labels, chart_title='Follower Analytics')
+    return render_template('chart.html', values=values,
+                           labels=labels, chart_title='Follower Analytics',
+                           follower_count=default_user.followers_count,
+                           status_count=default_user.statuses_count,
+                           tweets_count=12456,
+                           following_count=default_user.friends_count)
 
 
 @app.route("/<username>/tweets")
