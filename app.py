@@ -19,16 +19,25 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 default_user = api.get_user('Google')
 
+
 @app.route("/")
 def chart():
     labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
     values = [10, 9, 8, 7, 6, 4, 7, 8]
     return render_template('chart.html', values=values,
-                           labels=labels, chart_title='Follower Analytics',
+                           labels=labels,
+                           chart_title='Follower Analytics',
                            follower_count=default_user.followers_count,
                            status_count=default_user.statuses_count,
                            tweets_count=12456,
                            following_count=default_user.friends_count)
+
+"""
+@app.route("/enternew/<username>"):
+def enter_user(username):
+    user = api.get_user()
+"""
+
 
 
 @app.route("/<username>/tweets")
@@ -39,19 +48,21 @@ def get_tweets(username):
 
 @app.route("/<username>/follower")
 def get_follower(username):
-    # Add the Code here
-    start_time = time.time()
     total_followers = [0, ]
-    time_elapsed = [0, ]
+    labels = [i for i in range(0, 10)]
     user = api.get_user(username)
     count = 0
-    while True:
+    while count <= len(labels):
         print('In loop')
-        total_followers.append(user.followers_count)
-        time_elapsed.append(time.time() - start_time)
         count += 1
-        if count == 10:
-            return render_template('chart.html', values=total_followers, labels=time_elapsed)
+        total_followers.append(user.followers_count / 1000000)
+        time.sleep(1)
+
+    return render_template('chart.html', values=total_followers, labels=labels,
+                           follower_count=user.followers_count,
+                           status_count=user.statuses_count,
+                           tweets_count=12456,
+                           following_count=user.friends_count)
 
 
 if __name__ == "__main__":
