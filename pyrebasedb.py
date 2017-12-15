@@ -19,14 +19,6 @@ fb = firebase.database()
 import tweepy
 import time
 
-consumer_key = "SDbxZcpf4hhIXJlyIAHHYu9EC"
-consumer_secret = "aM6p0kUib8vDi8HATWt8cXXHius5H6S4VZqMYOAl9VgdUPG6nL"
-access_token = "696664768795537408-1vY5HARSQDU1iFXTNmhxch7vECBL13Q"
-access_token_secret = "lBFfY3ptJjS6WUL6Taz9T9vHJirRS12TdP0LU6y2lfizm"
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
-api = tweepy.API(auth)
-
 
 
 def insert_user(username):
@@ -34,8 +26,20 @@ def insert_user(username):
     temp_follower_id = 'yoyoyyoyo'
     count = 0
     
-    for i in range(10):
+    temp_user = "xyz"
+    
+    for i in range(60):
 
+
+        consumer_key = ["SDbxZcpf4hhIXJlyIAHHYu9EC","c72Ktc4TlTxlcXraNP8VWuhwZ"]
+        consumer_secret = ["aM6p0kUib8vDi8HATWt8cXXHius5H6S4VZqMYOAl9VgdUPG6nL","BuIqx2v5kIJitEeVnxd1gxMWoU5no3TDyEXNfxaDmuVFJyUczO"]
+        access_token = ["696664768795537408-1vY5HARSQDU1iFXTNmhxch7vECBL13Q","937993754350256129-4dJ0Hl3OYJqDSzPjOT9G6LLyCKcbhAU"]
+        access_token_secret = ["lBFfY3ptJjS6WUL6Taz9T9vHJirRS12TdP0LU6y2lfizm","PB9x7N9vwxl9PPHIle1NkcfaLlbQM2QLddexV6W9CfeCE"]
+        auth = tweepy.OAuthHandler(consumer_key[count%2], consumer_secret[count%2])
+        auth.set_access_token(access_token[count%2], access_token_secret[count%2])
+        api = tweepy.API(auth)
+
+        tweet = api.user_timeline('katyperry')[0]
         count+=1
         start = time.time()
         print('I am in Loop '+str(count))
@@ -72,7 +76,7 @@ def insert_user(username):
         DATA['url']=user.url
         DATA['time_zone']=user.time_zone
         DATA['profile_sidebar_border_color']=user.profile_sidebar_border_color
-        print (time.time()-start)
+        #print (time.time()-start)
 
         #count can be increased upto 5000 as per demand
         follower_list_class = api.followers(username,count = 100)
@@ -119,7 +123,7 @@ def insert_user(username):
                 personal_data['url']=xyz.url
                 personal_data['time_zone']=xyz.time_zone
                 personal_data['profile_sidebar_border_color']=xyz.profile_sidebar_border_color
-                print (time.time()-start)
+                #print (time.time()-start)
                 new_follower_list.append(xyz.screen_name)
 
             else:
@@ -130,16 +134,72 @@ def insert_user(username):
         #DATA['followers'] = followers_data
         
         temp_follower_id = follower_list_class[0].screen_name
-        time_list = {}
+        time_list_followers = {}
         if new_follower_list is not []:
-            time_list[time.ctime()]=(' '.join(new_follower_list))
-        #DATA['time_wise_followers'] = time_list
+            time_list_followers[time.ctime()]=(' '.join(new_follower_list))
+        #DATA['time_wise_followers'] = time_list_followers
         #print (DATA)
+
+        
+        retweeter_list = []
+        retweeter_details_dict = {}
+        
+        results = api.retweets(tweet.id,count = 80)
+        for u in results:
+            retweeter_personal_data = {}
+            if (temp_user!=u.user.screen_name):
+                #created_at is saved in str due to datetime formaat
+                retweeter_personal_data['created_at']=str(u.user.created_at)
+                retweeter_personal_data['description']=u.user.description
+                retweeter_personal_data['entities']=u.user.entities
+                retweeter_personal_data['favourites_count']=u.user.favourites_count
+                retweeter_personal_data['followers_count']=u.user.followers_count
+                retweeter_personal_data['friends_count']=u.user.friends_count
+                retweeter_personal_data['geo_enabled']=u.user.geo_enabled
+                retweeter_personal_data['ID']=u.user.id
+                retweeter_personal_data['lang']=u.user.lang
+                retweeter_personal_data['listed_count']=u.user.listed_count
+                retweeter_personal_data['location']=u.user.location
+                retweeter_personal_data['name']=u.user.name
+                retweeter_personal_data['profile_use_background_image']=u.user.profile_use_background_image
+                # _api stored as string (it's actually a json object)
+                retweeter_personal_data['_api']=str(u.user._api)
+                retweeter_personal_data['verified']=u.user.verified
+                retweeter_personal_data['profile_sidebar_fill_color']=u.user.profile_sidebar_fill_color
+                retweeter_personal_data['profile_text_color']=u.user.profile_text_color
+                retweeter_personal_data['protected']=u.user.protected
+                retweeter_personal_data['profile_background_color']=u.user.profile_background_color
+                retweeter_personal_data['utc_offset']=u.user.utc_offset
+                retweeter_personal_data['statuses_count']=u.user.statuses_count
+                retweeter_personal_data['profile_link_color']=u.user.profile_link_color
+                retweeter_personal_data['profile_image_url']=u.user.profile_image_url
+                retweeter_personal_data['profile_background_image_url']=u.user.profile_background_image_url
+                retweeter_personal_data['profile_background_tile']=u.user.profile_background_tile
+                retweeter_personal_data['url']=u.user.url
+                retweeter_personal_data['time_zone']=u.user.time_zone
+                retweeter_personal_data['profile_sidebar_border_color']=u.user.profile_sidebar_border_color
+
+                retweeter_details_dict[u.user.screen_name] = retweeter_personal_data
+                retweeter_list.append(u.user.screen_name)
+            else:
+                break
+        temp_user = results[0].user.screen_name
+
+        time_list_retweeters = {}
+        if retweeter_list is not []:
+            time_list_retweeters[time.ctime()]=(' '.join(retweeter_list))
+
+
+
+
+
 
         fb.child(user.screen_name).update(DATA)
         fb.child(user.screen_name).child('followers').update(followers_data)
-        fb.child(user.screen_name).child('time_wise_followers').update(time_list)
-
+        fb.child(user.screen_name).child('time_wise_followers').update(time_list_followers)
+        fb.child(user.screen_name).child('retweeters').update(retweeter_details_dict)
+        fb.child(user.screen_name).child('time_wise_retweeters').update(time_list_retweeters)
+        print ("sleeping for "+str(int(60-(time.time()-start)))+" seconds.......")
         time.sleep(60-(time.time()-start))
 
 
