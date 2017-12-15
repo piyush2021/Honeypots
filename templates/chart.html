@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}"
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Twitter Ramble | Data Analytics</title>
+  <!-- Responsive Design -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/bower_components/font-awesome/css/font-awesome.min.css') }}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/bower_components/Ionicons/css/ionicons.min.css') }}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/dist/css/AdminLTE.min.css') }}">
+  <!-- AdminLTE Skins -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/dist/css/skins/skin-blue.min.css') }}">
+
+  <!-- Google Font -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<!-- Main body -->
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="index2.html" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>T</b>R</span>
+      <!-- logo for small screens -->
+      <span class="logo-lg"><b>Twitter</b>Ramble</span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- User Account Menu -->
+          <li>
+            <!-- Input box for UserName input -->
+            <div class="form-group">
+              <label for="usr" class='user-scalable'>Name:</label>
+              <input type="text" class="form-control" id="username">
+              <input type="submit" name="submit" onclick="giveUsername()">
+            </div>
+          </li>
+          <li class="dropdown user user-menu">
+            <!-- Menu Toggle Button -->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <!-- The user image in the navbar-->
+              <img src="{{ url_for('static', filename='styles/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
+              <span class="hidden-xs">User Name</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- The user image in the menu -->
+              <li class="user-header">
+                <img src="{{ url_for('static', filename='styles/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+
+                <p>
+                  User Name
+                  <br>@Twitter UserName
+                </p>
+              </li>
+              <!-- Menu Body -->
+              <li class="user-body">
+                <div class="row">
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Followers</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Tweets</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Status Count</a>
+                  </div>
+                </div>
+                <!-- /.row -->
+              </li>
+            </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="{{ url_for('static', filename='styles/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>User Name</p>
+          <p>@Twitter UserName</p>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">MAIN NAVIGATION</li>
+        <li class="active"><a href="http://127.0.0.1:5000/Twitter/follower"><i class="fa fa-link" id="follower_link"></i> <span>Follower Analytics</span></a></li>
+        <li><a href="#"><i class="fa fa-link"></i> <span>Tweets Statistics</span></a></li>
+        <li><a href="#"><i class="fa fa-link"></i> <span>Status Count</span></a></li>
+        <li><a href="#"><i class="fa fa-link"></i> <span>Other Data</span></a></li>
+        <li><a href="#"><i class="fa fa-link"></i> <span>More Analysis</span></a></li>
+      </ul>
+      <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Twitter Analytics
+        <small>Data Analytics of the User <b>@Twitter UserName</b></small>
+      </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3 id="followers_head">1500</h3>
+              <p><b>Total Followers</b></p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3 id="status_head">53</h3>
+
+              <p><b>Status Count</b></p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3 id="tweets_head">44</h3>
+
+              <p><b>Number of Tweets this hour</b></p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3 id="following_head">65</h3>
+
+              <p>Total Following</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+      <!-- /.row -->
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-7 connectedSortable">
+          <!-- Custom tabs -->
+          <div class="nav-tabs-custom">
+            <!-- Tabs within a box -->
+            <ul class="nav nav-tabs pull-right">
+              <li class="pull-left header"><i class="fa fa-inbox"></i> </li>
+            </ul>
+            <div class="tab-content no-padding">
+              <canvas id="follower_chart" style="position: relative; width: 500px; height: 300px;"></canvas>
+          </div>
+          <!-- /.nav-tabs-custom -->
+
+          <!-- solid  graph with minimising controls -->
+          <div class="box box-solid bg-teal-gradient">
+            <div class="box-header">
+
+              <i class="fa fa-th"></i>
+
+              <h3 class="box-title">Tweets Statistics</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div class="box-body border-radius-none">
+              <div class="chart" id="line-chart" style="height: 250px;"></div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <div class="nav-tabs-custom">
+            <!-- Tabs within a box -->
+            <ul class="nav nav-tabs pull-right">
+              <li class="pull-left header" id="chart_heading"><i class="fa fa-inbox"></i>Follower Analytics</li>
+            </ul>
+            <div class="tab-content no-padding">
+              <canvas id="chart" style="position: relative; height: 300px;"></canvas>
+          </div>
+            <!-- /.box -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      <b>Contact Us :<br>
+      hridoydutta123.github.io
+    </b>
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2017 <a href="#">Tanmoy Chakraborty</a>.</strong> All rights reserved.
+  </footer>    
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 3 -->
+<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyB7DQhrxxFTYPUhfahcqEuPuTt8Wqj-xNk",
+    authDomain: "honeypots-71451.firebaseapp.com",
+    databaseURL: "https://honeypots-71451.firebaseio.com",
+    projectId: "honeypots-71451",
+    storageBucket: "honeypots-71451.appspot.com",
+    messagingSenderId: "341223090209"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyB7DQhrxxFTYPUhfahcqEuPuTt8Wqj-xNk",
+    authDomain: "honeypots-71451.firebaseapp.com",
+    databaseURL: "https://honeypots-71451.firebaseio.com",
+    projectId: "honeypots-71451",
+    storageBucket: "honeypots-71451.appspot.com",
+    messagingSenderId: "341223090209"
+  };
+  firebase.initializeApp(config);
+</script>
+<script src="{{ url_for('static', filename='styles/bower_components/jquery/dist/jquery.min.js') }}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="{{ url_for('static', filename='styles/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<!-- Additional Scripts -->
+<script src="{{ url_for('static', filename='styles/dist/js/adminlte.min.js') }}"></script>
+<!-- Morris.js charts -->
+<script src="{{ url_for('static', filename='styles/bower_components/raphael/raphael.min.js') }}"></script>
+<script src="{{ url_for('static', filename='styles/bower_components/morris.js/morris.min.js') }}"></script>
+
+<!-- import plugin script -->
+<script src="{{ url_for('static', filename='Chart.min.js') }}"></script>
+<!-- Chart.js script -->
+<script>
+  document.getElementById("chart_heading").innerHTML="Item was changed";
+</script>
+<script>
+  document.getElementById("followers_head").innerHTML = {{ follower_count }};
+  document.getElementById("status_head").innerHTML = {{ status_count }};
+  document.getElementById("tweets_head").innerHTML = {{ tweets_count }};
+  document.getElementById("following_head").innerHTML = {{ following_count }};
+</script>
+<script>
+  function giveUsername() {
+    var user_input = document.getElementById("username")
+    document.getElementById("follower_link").href = ""
+  }
+</script>
+<script>
+    
+   // line chart data
+   var barData = {
+   labels : [{% for item in labels %}
+                  "{{item}}",
+              {% endfor %}],
+   datasets : [
+      {     
+            // label: "Followers (In Million)"
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            bezierCurve : false,
+            data : [{% for item in values %}
+                      {{item}},
+                    {% endfor %}]
+      }]
+   }
+ 
+    Chart.defaults.global.animationSteps = 50;
+    Chart.defaults.global.tooltipYPadding = 16;
+    Chart.defaults.global.tooltipCornerRadius = 0;
+    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+    Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+    Chart.defaults.global.animationEasing = "easeOutBounce";
+    Chart.defaults.global.responsive = false;
+    Chart.defaults.global.scaleLineColor = "black";
+    Chart.defaults.global.scaleFontSize = 16;
+ 
+   // get follower chart canvas
+   var mychart = document.getElementById("follower_chart").getContext("2d");
+ 
+   steps = 10
+   max = 1
+   // draw line chart
+   var LineChartDemo = new Chart(mychart).Line(barData, {
+        scaleOverride: true,
+        scaleSteps: steps,
+        scaleStepWidth: Math.ceil(max / steps),
+        scaleStartValue: 0,
+        scaleShowVerticalLines: true,
+        scaleShowGridLines : true,
+        barShowStroke : true,
+        scaleShowLabels: true,
+        bezierCurve: false, 
+ 
+   });
+ </script>
+</body>
+</html>
