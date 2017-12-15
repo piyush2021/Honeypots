@@ -191,6 +191,12 @@ def insert_user(username):
 
 
 
+        follower_count_time_wise = {}
+        follower_count_time_wise[time.ctime()] = user.followers_count
+
+
+
+
 
 
 
@@ -199,6 +205,7 @@ def insert_user(username):
         fb.child(user.screen_name).child('time_wise_followers').update(time_list_followers)
         fb.child(user.screen_name).child('retweeters').update(retweeter_details_dict)
         fb.child(user.screen_name).child('time_wise_retweeters').update(time_list_retweeters)
+        fb.child(user.screen_name).child('time_wise_followers_count').update(follower_count_time_wise)
         print ("sleeping for "+str(int(60-(time.time()-start)))+" seconds.......")
         time.sleep(60-(time.time()-start))
 
