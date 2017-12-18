@@ -1,0 +1,4 @@
+Flask==0.12.2
+tweepy==3.5.0
+pyrebase==3.0.27
+gunicorn==19.7.1
