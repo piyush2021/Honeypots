@@ -3,6 +3,7 @@ from flask import Markup
 from flask import Flask
 from flask import render_template
 import tweepy
+import pyrebase
 import time
 
 app = Flask(__name__)
@@ -19,6 +20,17 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 default_user = api.get_user('Google')
 
+config = {
+    "apiKey": "AIzaSyCFUqwqAS_l7MU631EZ9kWUv5dWqfe11us",
+    "authDomain": "t-estproject.firebaseapp.com",
+    "databaseURL": "https://t-estproject.firebaseio.com",
+    "projectId": "t-estproject",
+    "storageBucket": "t-estproject.appspot.com",
+    "messagingSenderId": "636835135371"
+}
+
+firebase = pyrebase.initialize_app(config)
+db = firebase.database()
 
 @app.route("/")
 def chart():
@@ -27,16 +39,10 @@ def chart():
     return render_template('chart.html', values=values,
                            labels=labels,
                            chart_title='Follower Analytics',
-                           follower_count=default_user.followers_count,
-                           status_count=default_user.statuses_count,
+                           follower_count=db.child('katyperry').child('followers_count').get().val(),
+                           status_count=db.child('katyperry').child('statuses_count').get().val(),
                            tweets_count=12456,
-                           following_count=default_user.friends_count)
-
-"""
-@app.route("/enternew/<username>"):
-def enter_user(username):
-    user = api.get_user()
-"""
+                           following_count=db.child('katyperry').child('friends_count').get().val())
 
 
 
