@@ -83,7 +83,7 @@ def insert_user(username):
         DATA['url']=user.url
         DATA['time_zone']=user.time_zone
         DATA['profile_sidebar_border_color']=user.profile_sidebar_border_color
-        DATA['Token']
+        
         print (time.time()-start)
         #print (time.time()-start)
 
