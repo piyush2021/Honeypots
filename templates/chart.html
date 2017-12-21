@@ -111,8 +111,8 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="active"><a href="http://127.0.0.1:5000/Twitter/follower"><i class="fa fa-link" id="follower_link"></i> <span>Follower Analytics</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Tweets Statistics</span></a></li>
+        <li class="active"><a href="/"><i class="fa fa-link" id="follower_link"></i> <span>Follower Analytics</span></a></li>
+        <li><a href="/tweets"><i class="fa fa-link"></i> <span>Tweets Statistics</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Status Count</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Other Data</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>More Analysis</span></a></li>
@@ -207,7 +207,7 @@
               <li class="pull-left header"><i class="fa fa-inbox"></i> </li>
             </ul> -->
             <div class="tab-content no-padding" style="width: 800px; height:  600px">
-              <h3 class="box-title">Follower Statistics</h3>
+              <h3 class="box-title" id="chart_title">Follower Statistics</h3>
               <canvas id="follower_chart" style="position: relative; width: 700px; height: 600px;"></canvas>
           </div>
           <!-- /.nav-tabs-custom -->
@@ -365,6 +365,8 @@
  
    // get follower chart canvas
    var mychart = document.getElementById("follower_chart").getContext("2d");
+   // var chartTitle = document.getElementById("chart_title")
+   // chartTitle.innerHTML = {{ chart_title }}
  
    steps = {{ steps }}
    max = {{ max_values }}
@@ -383,9 +385,13 @@
  
    });
  </script>
-
+<script>
+  var chartTitle = document.getElementById("chart_title");
+  var xyz = {{ chart_title }};
+  chartTitle.innerHTML = xyz;
+</script>
 <!-- Script to plot retweeter chart -->
- <script>
+ <!-- <script>
     
    // Retweeter chart data
    var barData = {
@@ -437,6 +443,6 @@
         bezierCurve: false, 
  
    });
- </script>
+ </script> -->
 </body>
 </html>

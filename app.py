@@ -33,15 +33,15 @@ db = firebase.database()
 
 @app.route("/")
 def chart():
-  step = 15
+  step = 10
   followers = db.child("katyperry").child("time_wise_followers_count").order_by_key().limit_to_last(step).get().val()
-  retweeters = db.child("katyperry").child("time_wise_retweeter_count").order_by_key().limit_to_last(step).get().val()
-  retweeter_labels = list(retweeters.keys())
-  retweeter_values = list(retweeters.values())
+  #retweeters = db.child("katyperry").child("time_wise_retweeter_count").order_by_key().limit_to_last(step).get().val()
+  #retweeter_labels = list(retweeters.keys())
+  #retweeter_values = list(retweeters.values())
   labels = list(followers.keys())
   values = list(followers.values())
-  tweets = api.get_status(943572830179995648)
-  tweets =tweets.text
+  #tweets = api.get_status(943572830179995648)
+  #tweets =tweets.text
 
 
   return render_template('chart.html', 
@@ -54,19 +54,30 @@ def chart():
                           follower_count=db.child('katyperry').child('followers_count').get().val(),
                           status_count=db.child('katyperry').child('statuses_count').get().val(),
                           tweets_count=123456,
+                          following_count=db.child('katyperry').child('friends_count').get().val())
+
+
+
+@app.route("/tweets")
+def get_tweets():
+  step = 10
+  retweeters = db.child("katyperry").child("time_wise_retweeter_count").order_by_key().limit_to_last(step).get().val()
+  retweeter_labels = list(retweeters.keys())
+  retweeter_values = list(retweeters.values())
+  #tweets = api.get_status(943572830179995648)
+  #tweets =tweets.text
+  return render_template('chart.html',
+                          steps = step,
+                          chart_title='Retweeter Analytics',
+                          follower_count=db.child('katyperry').child('followers_count').get().val(),
+                          status_count=db.child('katyperry').child('statuses_count').get().val(),
+                          tweets_count=123456,
                           following_count=db.child('katyperry').child('friends_count').get().val(),
-                          retweeter_labels = retweeter_labels,
-                          retweeter_values = retweeter_values,
-                          retweeter_max_values = retweeter_values[-1],
-                          retweeter_min_values = retweeter_values[0], 
-                          tweet = tweets)
-
-
-
-@app.route("/<username>/tweets")
-def get_tweets(username):
-    # Add the Code here
-    return 'Hello'
+                          labels = retweeter_labels,
+                          values = retweeter_values,
+                          max_values = retweeter_values[-1],
+                          min_values = retweeter_values[0])
+    
 
 
 @app.route("/<username>/follower")
