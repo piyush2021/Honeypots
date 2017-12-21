@@ -18,7 +18,6 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth)
-default_user = api.get_user('Google')
 
 config = {
     "apiKey": "AIzaSyCFUqwqAS_l7MU631EZ9kWUv5dWqfe11us",
@@ -34,10 +33,17 @@ db = firebase.database()
 
 @app.route("/")
 def chart():
-  step = 35
-  user = db.child("katyperry").child("time_wise_followers_count").order_by_key().limit_to_last(step).get().val()
-  labels = list(user.keys())
-  values = list(user.values())
+  step = 15
+  followers = db.child("katyperry").child("time_wise_followers_count").order_by_key().limit_to_last(step).get().val()
+  retweeters = db.child("katyperry").child("time_wise_retweeter_count").order_by_key().limit_to_last(step).get().val()
+  retweeter_labels = list(retweeters.keys())
+  retweeter_values = list(retweeters.values())
+  labels = list(followers.keys())
+  values = list(followers.values())
+  tweets = api.get_status(943572830179995648)
+  tweets =tweets.text
+
+
   return render_template('chart.html', 
                           values=values,
                           labels=labels,
@@ -48,7 +54,12 @@ def chart():
                           follower_count=db.child('katyperry').child('followers_count').get().val(),
                           status_count=db.child('katyperry').child('statuses_count').get().val(),
                           tweets_count=123456,
-                          following_count=db.child('katyperry').child('friends_count').get().val())
+                          following_count=db.child('katyperry').child('friends_count').get().val(),
+                          retweeter_labels = retweeter_labels,
+                          retweeter_values = retweeter_values,
+                          retweeter_max_values = retweeter_values[-1],
+                          retweeter_min_values = retweeter_values[0], 
+                          tweet = tweets)
 
 
 

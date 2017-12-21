@@ -1,18 +1,16 @@
-import pyrebase
+import tweepy
+# Twitter API credentials
+consumer_key = "c72Ktc4TlTxlcXraNP8VWuhwZ"
+consumer_secret = "BuIqx2v5kIJitEeVnxd1gxMWoU5no3TDyEXNfxaDmuVFJyUczO"
+access_token = "937993754350256129-4dJ0Hl3OYJqDSzPjOT9G6LLyCKcbhAU"
+access_token_secret = "PB9x7N9vwxl9PPHIle1NkcfaLlbQM2QLddexV6W9CfeCE"
 
-config = {
-    "apiKey": "AIzaSyCFUqwqAS_l7MU631EZ9kWUv5dWqfe11us",
-    "authDomain": "t-estproject.firebaseapp.com",
-    "databaseURL": "https://t-estproject.firebaseio.com",
-    "projectId": "t-estproject",
-    "storageBucket": "t-estproject.appspot.com",
-    "messagingSenderId": "636835135371"
-}
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
 
-firebase = pyrebase.initialize_app(config)
-db = firebase.database()
+api = tweepy.API(auth)
 
-user = db.child("katyperry").child("time_wise_followers_count").order_by_key().limit_to_last(10).get().val()
+tweets = api.get_status(943572830179995648)
+tweets = tweets.text
+print(tweets)
 
-print(list(user.values()))
-print(list(user.keys()))

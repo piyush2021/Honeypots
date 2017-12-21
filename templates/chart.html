@@ -203,11 +203,12 @@
           <!-- Custom tabs (Charts with tabs)-->
           <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
-            <ul class="nav nav-tabs pull-right">
+            <!-- <ul class="nav nav-tabs pull-right">
               <li class="pull-left header"><i class="fa fa-inbox"></i> </li>
-            </ul>
-            <div class="tab-content no-padding">
-              <canvas id="follower_chart" style="position: relative; width: 500px; height: 600px;"></canvas>
+            </ul> -->
+            <div class="tab-content no-padding" style="width: 800px; height:  600px">
+              <h3 class="box-title">Follower Statistics</h3>
+              <canvas id="follower_chart" style="position: relative; width: 700px; height: 600px;"></canvas>
           </div>
           <!-- /.nav-tabs-custom -->
 
@@ -220,7 +221,7 @@
           <!-- /.nav-tabs-custom -->
 
           <!-- solid sales graph -->
-          <div class="box box-solid bg-teal-gradient">
+          <div class="box box-solid bg-teal-gradient" id="tweet_box" style="height: 250px; width: 800px;">
             <div class="box-header">
 
               <i class="fa fa-th"></i>
@@ -235,17 +236,18 @@
               </div>
             </div>
             <div class="box-body border-radius-none">
-              <div class="chart" id="line-chart" style="height: 250px;"></div>
+              <div class="chart" id="chart_box"></div>
             </div>
             <!-- /.box-body -->
           </div>
           <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
             <ul class="nav nav-tabs pull-right">
-              <li class="pull-left header" id="chart_heading"><i class="fa fa-inbox"></i>Follower Analytics</li>
+              <!-- <li class="pull-left header" id="chart_heading"><i class="fa fa-inbox"></i>Follower Analytics</li> -->
             </ul>
-            <div class="tab-content no-padding">
-              <canvas id="chart" style="position: relative; height: 300px;"></canvas>
+            <div class="tab-content no-padding" style="height: 600px; width: 800px;">
+              <h3 class="box-title">Retweeter Statistics</h3>
+              <canvas id="retweeter_chart" style="position: relative; height: 600px; width: 700px"></canvas>
           </div>
             <!-- /.box -->
     </section>
@@ -314,7 +316,7 @@
 <script src="{{ url_for('static', filename='Chart.min.js') }}"></script>
 <!-- Chart.js script -->
 <script>
-  document.getElementById("chart_heading").innerHTML="Item was changed";
+  var tweetBox = document.getElementById("tweet_box").innerHTML = {{ tweet }}
 </script>
 <script>
   document.getElementById("followers_head").innerHTML = {{ follower_count }};
@@ -367,6 +369,61 @@
    steps = {{ steps }}
    max = {{ max_values }}
    min = {{ min_values}}
+   // draw line chart
+   var LineChartDemo = new Chart(mychart).Line(barData, {
+        scaleOverride: true,
+        scaleSteps: steps,
+        scaleStepWidth: Math.ceil((max - min)/ steps),
+        scaleStartValue: min,
+        scaleShowVerticalLines: true,
+        scaleShowGridLines : true,
+        barShowStroke : true,
+        scaleShowLabels: true,
+        bezierCurve: false, 
+ 
+   });
+ </script>
+
+<!-- Script to plot retweeter chart -->
+ <script>
+    
+   // Retweeter chart data
+   var barData = {
+   labels : [{% for item in retweeter_labels %}
+                  "{{item}}",
+              {% endfor %}],
+   datasets : [
+      {     
+            // label: "Followers (In Million)"
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            bezierCurve : false,
+            data : [{% for item in retweeter_values %}
+                      {{item}},
+                    {% endfor %}]
+      }]
+   }
+ 
+    Chart.defaults.global.animationSteps = 50;
+    Chart.defaults.global.tooltipYPadding = 16;
+    Chart.defaults.global.tooltipCornerRadius = 0;
+    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+    Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+    Chart.defaults.global.animationEasing = "easeOutBounce";
+    Chart.defaults.global.responsive = false;
+    Chart.defaults.global.scaleLineColor = "black";
+    Chart.defaults.global.scaleFontSize = 16;
+ 
+   // get follower chart canvas
+   var mychart = document.getElementById("retweeter_chart").getContext("2d");
+ 
+   steps = {{ steps }}
+   max = {{ retweeter_max_values }}
+   min = {{ retweeter_min_values}}
    // draw line chart
    var LineChartDemo = new Chart(mychart).Line(barData, {
         scaleOverride: true,
