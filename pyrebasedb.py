@@ -19,7 +19,7 @@ fb = firebase.database()
 import tweepy
 import time
 
-<<<<<<< HEAD
+
 consumer_key = "SDbxZcpf4hhIXJlyIAHHYu9EC"
 consumer_secret = "aM6p0kUib8vDi8HATWt8cXXHius5H6S4VZqMYOAl9VgdUPG6nL"
 access_token = "696664768795537408-1vY5HARSQDU1iFXTNmhxch7vECBL13Q"
@@ -28,23 +28,15 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
-=======
->>>>>>> b6ad539e538df8eb5bb3ac4afc333e41e8493879
-
 
 def insert_user(username):
 
     temp_follower_id = 'yoyoyyoyo'
     count = 0
-    
-<<<<<<< HEAD
-    for i in range(10):
-
-=======
-    temp_user = "xyz"
-    
     for i in range(60):
 
+
+        temp_user = "xyz"
 
         consumer_key = ["SDbxZcpf4hhIXJlyIAHHYu9EC","c72Ktc4TlTxlcXraNP8VWuhwZ"]
         consumer_secret = ["aM6p0kUib8vDi8HATWt8cXXHius5H6S4VZqMYOAl9VgdUPG6nL","BuIqx2v5kIJitEeVnxd1gxMWoU5no3TDyEXNfxaDmuVFJyUczO"]
@@ -55,7 +47,6 @@ def insert_user(username):
         api = tweepy.API(auth)
 
         tweet = api.user_timeline('katyperry')[0]
->>>>>>> b6ad539e538df8eb5bb3ac4afc333e41e8493879
         count+=1
         start = time.time()
         print('I am in Loop '+str(count))
@@ -92,11 +83,9 @@ def insert_user(username):
         DATA['url']=user.url
         DATA['time_zone']=user.time_zone
         DATA['profile_sidebar_border_color']=user.profile_sidebar_border_color
-<<<<<<< HEAD
+        DATA['Token']
         print (time.time()-start)
-=======
         #print (time.time()-start)
->>>>>>> b6ad539e538df8eb5bb3ac4afc333e41e8493879
 
         #count can be increased upto 5000 as per demand
         follower_list_class = api.followers(username,count = 100)
@@ -143,11 +132,8 @@ def insert_user(username):
                 personal_data['url']=xyz.url
                 personal_data['time_zone']=xyz.time_zone
                 personal_data['profile_sidebar_border_color']=xyz.profile_sidebar_border_color
-<<<<<<< HEAD
                 print (time.time()-start)
-=======
                 #print (time.time()-start)
->>>>>>> b6ad539e538df8eb5bb3ac4afc333e41e8493879
                 new_follower_list.append(xyz.screen_name)
 
             else:
@@ -158,7 +144,6 @@ def insert_user(username):
         #DATA['followers'] = followers_data
         
         temp_follower_id = follower_list_class[0].screen_name
-<<<<<<< HEAD
         time_list = {}
         if new_follower_list is not []:
             time_list[time.ctime()]=(' '.join(new_follower_list))
@@ -169,7 +154,6 @@ def insert_user(username):
         fb.child(user.screen_name).child('followers').update(followers_data)
         fb.child(user.screen_name).child('time_wise_followers').update(time_list)
 
-=======
         time_list_followers = {}
         if new_follower_list is not []:
             time_list_followers[time.ctime()]=(' '.join(new_follower_list))
@@ -238,12 +222,13 @@ def insert_user(username):
 
         fb.child(user.screen_name).update(DATA)
         fb.child(user.screen_name).child('followers').update(followers_data)
-        fb.child(user.screen_name).child('time_wise_followers').update(time_list_followers)
+        if new_follower_list is not []:
+            fb.child(user.screen_name).child('time_wise_followers').update(time_list_followers)
         fb.child(user.screen_name).child('retweeters').update(retweeter_details_dict)
-        fb.child(user.screen_name).child('time_wise_retweeters').update(time_list_retweeters)
+        if retweeter_list is not []:
+            fb.child(user.screen_name).child('time_wise_retweeters').update(time_list_retweeters)
         fb.child(user.screen_name).child('time_wise_followers_count').update(follower_count_time_wise)
         print ("sleeping for "+str(int(60-(time.time()-start)))+" seconds.......")
->>>>>>> b6ad539e538df8eb5bb3ac4afc333e41e8493879
         time.sleep(60-(time.time()-start))
 
 
