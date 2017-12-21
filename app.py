@@ -34,7 +34,7 @@ db = firebase.database()
 
 @app.route("/")
 def chart():
-  step = 10
+  step = 35
   user = db.child("katyperry").child("time_wise_followers_count").order_by_key().limit_to_last(step).get().val()
   labels = list(user.keys())
   values = list(user.values())
@@ -47,7 +47,7 @@ def chart():
                           chart_title='Follower Analytics',
                           follower_count=db.child('katyperry').child('followers_count').get().val(),
                           status_count=db.child('katyperry').child('statuses_count').get().val(),
-                          tweets_count=db.child('katyperry').child('time_wise_retweeter_count').order_by_key().limit_to_last(1).get().val(),
+                          tweets_count=123456,
                           following_count=db.child('katyperry').child('friends_count').get().val())
 
 
