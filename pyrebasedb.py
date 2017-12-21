@@ -32,11 +32,12 @@ api = tweepy.API(auth)
 def insert_user(username):
 
     temp_follower_id = 'yoyoyyoyo'
+    temp_user = "xyz"
     count = 0
-    for i in range(60):
+    for i in range(180):
 
 
-        temp_user = "xyz"
+        
 
         consumer_key = ["SDbxZcpf4hhIXJlyIAHHYu9EC","c72Ktc4TlTxlcXraNP8VWuhwZ"]
         consumer_secret = ["aM6p0kUib8vDi8HATWt8cXXHius5H6S4VZqMYOAl9VgdUPG6nL","BuIqx2v5kIJitEeVnxd1gxMWoU5no3TDyEXNfxaDmuVFJyUczO"]
@@ -45,8 +46,9 @@ def insert_user(username):
         auth = tweepy.OAuthHandler(consumer_key[count%2], consumer_secret[count%2])
         auth.set_access_token(access_token[count%2], access_token_secret[count%2])
         api = tweepy.API(auth)
-
-        tweet = api.user_timeline('katyperry')[0]
+        timeline = api.user_timeline(username)
+        tweet = api.get_status(943572830179995648)
+        
         count+=1
         start = time.time()
         print('I am in Loop '+str(count))
@@ -84,7 +86,7 @@ def insert_user(username):
         DATA['time_zone']=user.time_zone
         DATA['profile_sidebar_border_color']=user.profile_sidebar_border_color
         
-        print (time.time()-start)
+        #print (time.time()-start)
         #print (time.time()-start)
 
         #count can be increased upto 5000 as per demand
@@ -132,7 +134,7 @@ def insert_user(username):
                 personal_data['url']=xyz.url
                 personal_data['time_zone']=xyz.time_zone
                 personal_data['profile_sidebar_border_color']=xyz.profile_sidebar_border_color
-                print (time.time()-start)
+                #print (time.time()-start)
                 #print (time.time()-start)
                 new_follower_list.append(xyz.screen_name)
 
@@ -164,11 +166,12 @@ def insert_user(username):
         retweeter_list = []
         retweeter_details_dict = {}
         
-        results = api.retweets(tweet.id,count = 80)
+        results = api.retweets(943572830179995648,count = 80)
         for u in results:
             retweeter_personal_data = {}
             if (temp_user!=u.user.screen_name):
                 #created_at is saved in str due to datetime formaat
+                #print temp_user, u.user.screen_name
                 retweeter_personal_data['created_at']=str(u.user.created_at)
                 retweeter_personal_data['description']=u.user.description
                 retweeter_personal_data['entities']=u.user.entities
@@ -201,8 +204,13 @@ def insert_user(username):
 
                 retweeter_details_dict[u.user.screen_name] = retweeter_personal_data
                 retweeter_list.append(u.user.screen_name)
+
             else:
                 break
+        
+
+
+
         temp_user = results[0].user.screen_name
 
         time_list_retweeters = {}
@@ -213,6 +221,8 @@ def insert_user(username):
 
         follower_count_time_wise = {}
         follower_count_time_wise[time.ctime()] = user.followers_count
+        retweeter_count_time_wise = {}
+        retweeter_count_time_wise[time.ctime()] = tweet.retweet_count
 
 
 
@@ -222,12 +232,15 @@ def insert_user(username):
 
         fb.child(user.screen_name).update(DATA)
         fb.child(user.screen_name).child('followers').update(followers_data)
-        if new_follower_list is not []:
+        if len(new_follower_list)!= 0 :
             fb.child(user.screen_name).child('time_wise_followers').update(time_list_followers)
+            fb.child(user.screen_name).child('time_wise_followers_count').update(follower_count_time_wise)
         fb.child(user.screen_name).child('retweeters').update(retweeter_details_dict)
-        if retweeter_list is not []:
+        if len(retweeter_list) != 0 :
             fb.child(user.screen_name).child('time_wise_retweeters').update(time_list_retweeters)
-        fb.child(user.screen_name).child('time_wise_followers_count').update(follower_count_time_wise)
+            fb.child(user.screen_name).child('time_wise_retweeter_count').update(retweeter_count_time_wise)
+        
+
         print ("sleeping for "+str(int(60-(time.time()-start)))+" seconds.......")
         time.sleep(60-(time.time()-start))
 
