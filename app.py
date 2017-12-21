@@ -34,15 +34,21 @@ db = firebase.database()
 
 @app.route("/")
 def chart():
-    labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
-    values = [10, 9, 8, 7, 6, 4, 7, 8]
-    return render_template('chart.html', values=values,
-                           labels=labels,
-                           chart_title='Follower Analytics',
-                           follower_count=db.child('katyperry').child('followers_count').get().val(),
-                           status_count=db.child('katyperry').child('statuses_count').get().val(),
-                           tweets_count=12456,
-                           following_count=db.child('katyperry').child('friends_count').get().val())
+  step = 10
+  user = db.child("katyperry").child("time_wise_followers_count").order_by_key().limit_to_last(step).get().val()
+  labels = list(user.keys())
+  values = list(user.values())
+  return render_template('chart.html', 
+                          values=values,
+                          labels=labels,
+                          steps = step,
+                          max_values = values[-1],
+                          min_values = values[0],
+                          chart_title='Follower Analytics',
+                          follower_count=db.child('katyperry').child('followers_count').get().val(),
+                          status_count=db.child('katyperry').child('statuses_count').get().val(),
+                          tweets_count=db.child('katyperry').child('time_wise_retweeter_count').order_by_key().limit_to_last(1).get().val(),
+                          following_count=db.child('katyperry').child('friends_count').get().val())
 
 
 

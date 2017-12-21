@@ -3,6 +3,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="refresh" content="60"> <!-- Refresh every 60 seconds -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Twitter Ramble | Data Analytics</title>
   <!-- Responsive Design -->
@@ -206,7 +207,7 @@
               <li class="pull-left header"><i class="fa fa-inbox"></i> </li>
             </ul>
             <div class="tab-content no-padding">
-              <canvas id="follower_chart" style="position: relative; width: 500px; height: 300px;"></canvas>
+              <canvas id="follower_chart" style="position: relative; width: 500px; height: 600px;"></canvas>
           </div>
           <!-- /.nav-tabs-custom -->
 
@@ -364,13 +365,14 @@
    var mychart = document.getElementById("follower_chart").getContext("2d");
  
    steps = 10
-   max = 1
+   max = {{ max_values }}
+   min = {{ min_values}}
    // draw line chart
    var LineChartDemo = new Chart(mychart).Line(barData, {
         scaleOverride: true,
         scaleSteps: steps,
-        scaleStepWidth: Math.ceil(max / steps),
-        scaleStartValue: 0,
+        scaleStepWidth: Math.ceil(max/ steps),
+        scaleStartValue: min,
         scaleShowVerticalLines: true,
         scaleShowGridLines : true,
         barShowStroke : true,
