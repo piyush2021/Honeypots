@@ -18,6 +18,7 @@ fb = firebase.database()
 
 import tweepy
 import time
+from datetime import datetime
 
 
 
@@ -139,8 +140,9 @@ def insert_user(username):
         
         temp_follower_id = follower_list_class[0].screen_name
         time_list = {}
+        now = datetime.now()
         if new_follower_list is not []:
-            time_list[time.ctime()]=(' '.join(new_follower_list))
+            time_list[str(now.year) + '-' + str(now.month) + '-' + str(now.date)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)]=(' '.join(new_follower_list))
         #DATA['time_wise_followers'] = time_list
         #print (DATA)
 
@@ -150,7 +152,7 @@ def insert_user(username):
 
         time_list_followers = {}
         if new_follower_list is not []:
-            time_list_followers[time.ctime()]=(' '.join(new_follower_list))
+            time_list_followers[str(now.year) + '-' + str(now.month) + '-' + str(now.date)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)]=(' '.join(new_follower_list))
         #DATA['time_wise_followers'] = time_list_followers
         #print (DATA)
 
@@ -207,14 +209,14 @@ def insert_user(username):
 
         time_list_retweeters = {}
         if retweeter_list is not []:
-            time_list_retweeters[time.ctime()]=(' '.join(retweeter_list))
+            time_list_retweeters[str(now.year) + '-' + str(now.month) + '-' + str(now.date)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)]=(' '.join(retweeter_list))
 
 
 
         follower_count_time_wise = {}
-        follower_count_time_wise[time.ctime()] = user.followers_count
+        follower_count_time_wise[str(now.year) + '-' + str(now.month) + '-' + str(now.date)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)] = user.followers_count
         retweeter_count_time_wise = {}
-        retweeter_count_time_wise[time.ctime()] = tweet.retweet_count
+        retweeter_count_time_wise[str(now.year) + '-' + str(now.month) + '-' + str(now.date)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)] = tweet.retweet_count
 
 
 
