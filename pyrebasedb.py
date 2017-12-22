@@ -20,14 +20,6 @@ import tweepy
 import time
 
 
-consumer_key = "SDbxZcpf4hhIXJlyIAHHYu9EC"
-consumer_secret = "aM6p0kUib8vDi8HATWt8cXXHius5H6S4VZqMYOAl9VgdUPG6nL"
-access_token = "696664768795537408-1vY5HARSQDU1iFXTNmhxch7vECBL13Q"
-access_token_secret = "lBFfY3ptJjS6WUL6Taz9T9vHJirRS12TdP0LU6y2lfizm"
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
-api = tweepy.API(auth)
-
 
 def insert_user(username):
 
@@ -241,8 +233,11 @@ def insert_user(username):
             fb.child(user.screen_name).child('time_wise_retweeter_count').update(retweeter_count_time_wise)
         
 
-        print ("sleeping for "+str(int(60-(time.time()-start)))+" seconds.......")
-        time.sleep(60-(time.time()-start))
+        
+        var = 60-(time.time()-start)
+        var = max(0,var)
+        print ("sleeping for "+str(var)+" seconds.......")
+        time.sleep(var)
 
 
 
