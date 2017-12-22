@@ -142,17 +142,17 @@ def insert_user(username):
         time_list = {}
         now = datetime.now()
         if new_follower_list is not []:
-            time_list[str(now.year) + '-' + str(now.month) + '-' + str(now.date)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)]=(' '.join(new_follower_list))
+            time_list[str(now.year) + '-' + str(now.month) + '-' + str(now.day)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)]=(' '.join(new_follower_list))
         #DATA['time_wise_followers'] = time_list
         #print (DATA)
-
+        
         fb.child(user.screen_name).update(DATA)
         fb.child(user.screen_name).child('followers').update(followers_data)
         fb.child(user.screen_name).child('time_wise_followers').update(time_list)
 
         time_list_followers = {}
         if new_follower_list is not []:
-            time_list_followers[str(now.year) + '-' + str(now.month) + '-' + str(now.date)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)]=(' '.join(new_follower_list))
+            time_list_followers[str(now.year) + '-' + str(now.month) + '-' + str(now.day)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)]=(' '.join(new_follower_list))
         #DATA['time_wise_followers'] = time_list_followers
         #print (DATA)
 
@@ -209,14 +209,14 @@ def insert_user(username):
 
         time_list_retweeters = {}
         if retweeter_list is not []:
-            time_list_retweeters[str(now.year) + '-' + str(now.month) + '-' + str(now.date)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)]=(' '.join(retweeter_list))
+            time_list_retweeters[str(now.year) + '-' + str(now.month) + '-' + str(now.day)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)]=(' '.join(retweeter_list))
 
 
 
         follower_count_time_wise = {}
-        follower_count_time_wise[str(now.year) + '-' + str(now.month) + '-' + str(now.date)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)] = user.followers_count
+        follower_count_time_wise[str(now.year) + '-' + str(now.month) + '-' + str(now.day)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)] = user.followers_count
         retweeter_count_time_wise = {}
-        retweeter_count_time_wise[str(now.year) + '-' + str(now.month) + '-' + str(now.date)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)] = tweet.retweet_count
+        retweeter_count_time_wise[str(now.year) + '-' + str(now.month) + '-' + str(now.day)+ ' ' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)] = tweet.retweet_count
 
 
 
@@ -247,5 +247,3 @@ def insert_user(username):
 username = 'katyperry'
 #call function insert_user to insert user's details on database
 insert_user(username)
-
-
