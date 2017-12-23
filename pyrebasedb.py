@@ -27,7 +27,7 @@ def insert_user(username):
     temp_follower_id = 'yoyoyyoyo'
     temp_user = "xyz"
     count = 0
-    for i in range(180):
+    while(1):
 
 
         
